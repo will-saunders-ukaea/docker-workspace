@@ -67,4 +67,5 @@ RUN . ~/spack/share/spack/setup-env.sh && spack install intel-oneapi-compilers@2
 RUN . ~/spack/share/spack/setup-env.sh && spack load intel-oneapi-compilers && spack compiler find
 RUN . ~/spack/share/spack/setup-env.sh && spack install --keep-stage wrs.nektar@5.2.0-b36964 +mkl %oneapi@2022.1.0 ^intel-oneapi-mpi  %oneapi@2022.1.0 ^intel-oneapi-mkl %oneapi@2022.1.0
 
-
+## clean spack downloads to try and reduce image size
+RUN . ~/spack/share/spack/setup-env.sh && spack clean --downloads
