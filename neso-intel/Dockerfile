@@ -64,8 +64,7 @@ RUN git clone https://github.com/will-saunders-ukaea/spack-wrs.git ~/spack-wrs
 RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/spack-wrs
 ## build nektar++
 RUN . ~/spack/share/spack/setup-env.sh && spack install intel-oneapi-compilers@2022.1.0
-RUN . ~/spack/share/spack/setup-env.sh && spack install intel-oneapi-mpi@2021.6.0
-RUN . ~/spack/share/spack/setup-env.sh && spack install intel-oneapi-mkl@2022.1.0
+RUN . ~/spack/share/spack/setup-env.sh && spack load intel-oneapi-compilers && spack compiler find
 RUN . ~/spack/share/spack/setup-env.sh && spack install --keep-stage wrs.nektar@5.2.0-b36964 +mkl %oneapi@2022.1.0 ^intel-oneapi-mpi  %oneapi@2022.1.0 ^intel-oneapi-mkl %oneapi@2022.1.0
 
 
