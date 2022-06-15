@@ -62,11 +62,9 @@ RUN echo '  mpich:\n\
 RUN git clone https://github.com/will-saunders-ukaea/spack-wrs.git ~/spack-wrs
 ## add wrs spack repo
 RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/spack-wrs
-
 ## build hipsycl for omp
 RUN . ~/spack/share/spack/setup-env.sh && spack install wrs.hipsycl@0.9.2 ~cuda ~nvcxx
-
 ## build nektar++
-RUN . ~/spack/share/spack/setup-env.sh && spack install --keep-stage wrs.nektar@5.2 ^mpich
+RUN . ~/spack/share/spack/setup-env.sh && spack install --keep-stage wrs.nektar@5.2.0-b36964 ^mpich
 
 
