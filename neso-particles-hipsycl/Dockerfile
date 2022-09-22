@@ -66,7 +66,9 @@ RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/NESO-Spack
 RUN . ~/spack/share/spack/setup-env.sh && spack install neso.hipsycl@0.9.2 ~cuda ~nvcxx ~omp_llvm
 ## build hdf5
 RUN . ~/spack/share/spack/setup-env.sh && spack install hdf5@1.13.1 ^mpich
-## build nektar++
-RUN . ~/spack/share/spack/setup-env.sh && spack install neso.nektar ^mpich
 
-
+# setup user envrionment
+RUN apt install -y environment-modules
+RUN echo "source ~/spack/share/spack/setup-env.sh" >> ~/.bashrc
+RUN echo "source /usr/share/modules/init/profile.sh" >> ~/.bashrc
+RUN for dirx in ~/spack/share/spack/modules/*; do echo "export MODULEPATH=$MODULEPATH:$dirx" >> ~/.bashrc ;done
