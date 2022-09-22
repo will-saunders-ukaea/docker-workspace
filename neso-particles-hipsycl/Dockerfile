@@ -74,3 +74,9 @@ RUN apt install -y environment-modules
 RUN echo "source ~/spack/share/spack/setup-env.sh" >> ~/.bashrc
 RUN echo "source /usr/share/modules/init/profile.sh" >> ~/.bashrc
 RUN for dirx in ~/spack/share/spack/modules/*; do echo "export MODULEPATH=$MODULEPATH:$dirx" >> ~/.bashrc ;done
+
+# load dependencies by default
+RUN echo "spack load hipsycl" >> ~/.bashrc
+RUN echo "spack load googletest" >> ~/.bashrc
+RUN echo "spack load hdf5" >> ~/.bashrc
+
