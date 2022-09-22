@@ -66,6 +66,8 @@ RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/NESO-Spack
 RUN . ~/spack/share/spack/setup-env.sh && spack install neso.hipsycl@0.9.2 ~cuda ~nvcxx ~omp_llvm
 ## build hdf5
 RUN . ~/spack/share/spack/setup-env.sh && spack install hdf5@1.13.1 ^mpich
+## build google test
+RUN . ~/spack/share/spack/setup-env.sh && spack install googletest@1.10.0
 
 # setup user envrionment
 RUN apt install -y environment-modules
