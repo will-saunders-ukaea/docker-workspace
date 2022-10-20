@@ -19,8 +19,6 @@ RUN apt install -y \
 	wget \
 	rsync \
 	curl \
-    mpich \
-    libmpich-dev \
     build-essential \
     gfortran \
     libncurses-dev \
@@ -46,13 +44,8 @@ RUN . ~/spack/share/spack/setup-env.sh && spack compiler find
 RUN pip3 install clingo
 RUN . ~/spack/share/spack/setup-env.sh && spack --bootstrap find
 
-## add system mpich and ncurses
-RUN echo '  mpich:\n\
-    externals:\n\
-    - spec: mpich@4.0+hydra device=ch4 netmod=ofi\n\
-      prefix: /usr\n\
-      buildable: false\n\
-  ncurses:\n\
+## add system ncurses
+RUN echo '  ncurses:\n\
     externals:\n\
     - spec: ncurses@6.3\n\
       prefix: /usr\n\
@@ -61,23 +54,12 @@ RUN echo '  mpich:\n\
 
 ## clone neso spack repo
 RUN git clone https://github.com/ExCALIBUR-NEPTUNE/NESO-Spack ~/NESO-Spack
+RUN cd ~/NESO-Spack && git checkout cmacmack-build-fixes
+RUN cd ~/NESO-Spack && git pull origin cmacmack-build-fixes
 ## add neso spack repo
 RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/NESO-Spack
-## build hipsycl for omp
-RUN . ~/spack/share/spack/setup-env.sh && spack install neso.hipsycl@0.9.2 ~cuda ~nvcxx ~omp_llvm
-## build hdf5
-RUN . ~/spack/share/spack/setup-env.sh && spack install hdf5@1.13.1 ^mpich
-## build google test
-RUN . ~/spack/share/spack/setup-env.sh && spack install googletest@1.10.0
 
-# setup user envrionment
-RUN apt install -y environment-modules
-RUN echo "source ~/spack/share/spack/setup-env.sh" >> ~/.bashrc
-RUN echo "source /usr/share/modules/init/profile.sh" >> ~/.bashrc
-RUN for dirx in ~/spack/share/spack/modules/*; do echo "export MODULEPATH=$MODULEPATH:$dirx" >> ~/.bashrc ;done
-
-# load dependencies by default
-RUN echo "spack load hipsycl" >> ~/.bashrc
-RUN echo "spack load googletest" >> ~/.bashrc
-RUN echo "spack load hdf5" >> ~/.bashrc
+RUN . ~/spack/share/spack/setup-env.sh && spack install intel-oneapi-compilers@2022.1.0
+RUN . ~/spack/share/spack/setup-env.sh && spack load intel-oneapi-compilers && spack compiler find
+RUN . ~/spack/share/spack/setup-env.sh && spack install neso.nektar%oneapi ^intel-oneapi-mkl ^intel-oneapi-mpi ^py-numpy%intel ^boost%intel
 
