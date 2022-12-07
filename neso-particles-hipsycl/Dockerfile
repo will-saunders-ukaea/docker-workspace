@@ -8,8 +8,8 @@ basic tools to Ubuntu 22.04"
 # Disable Prompt During Packages Installation
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt update
-RUN apt install -y \
+RUN apt-get update
+RUN apt-get install -y \
 	git \
 	vim \
 	python3 \
