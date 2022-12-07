@@ -75,7 +75,7 @@ RUN . ~/spack/share/spack/setup-env.sh && spack install googletest
 RUN git clone https://github.com/ExCALIBUR-NEPTUNE/NESO-Particles
 RUN git clone https://github.com/ExCALIBUR-NEPTUNE/NESO
 RUN cd NESO && git checkout dev-wrs-elec-pic
-RUN cd NESO && . ~/spack/share/spack/setup-env.sh && spack load nektar && spack load hipsycl && spack load hdf5 && spack load googletest && CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:~/NESO-Particles cmake -DHIPSYCL_TARGETS=omp -DCMAKE_BUILD_TYPE=RelWithDebInfo . && make Electrostatic2D3V.x
+RUN cd NESO && . ~/spack/share/spack/setup-env.sh && spack load nektar && spack load hipsycl && spack load hdf5 && spack load googletest && CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/NESO-Particles cmake -DHIPSYCL_TARGETS=omp -DCMAKE_BUILD_TYPE=RelWithDebInfo . && make Electrostatic2D3V.x
 
 
 
