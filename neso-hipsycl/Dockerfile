@@ -36,7 +36,7 @@ RUN apt-get install -y \
 
 ## Install spack
 RUN git clone -c feature.manyFiles=true https://github.com/spack/spack.git ~/spack
-RUN cd ~/spack && git checkout releases/v0.18 
+RUN cd ~/spack && git checkout releases/v0.19
 
 ## find system packages
 RUN . ~/spack/share/spack/setup-env.sh && spack external find
@@ -64,10 +64,10 @@ RUN git clone https://github.com/ExCALIBUR-NEPTUNE/NESO-Spack ~/NESO-Spack
 ## add wrs spack repo
 RUN . ~/spack/share/spack/setup-env.sh && spack repo add ~/NESO-Spack
 ## build hipsycl for omp
-RUN . ~/spack/share/spack/setup-env.sh && spack install neso.hipsycl@0.9.2 ~cuda ~nvcxx ~omp_llvm
+RUN . ~/spack/share/spack/setup-env.sh && spack install neso.hipsycl ~cuda ~nvcxx ~omp_llvm
 ## build hdf5
-RUN . ~/spack/share/spack/setup-env.sh && spack install hdf5@1.13.1 ^mpich
+RUN . ~/spack/share/spack/setup-env.sh && spack install hdf5@1.13.2 ^mpich
 ## build nektar++
-RUN . ~/spack/share/spack/setup-env.sh && spack install neso.nektar ^mpich
+RUN . ~/spack/share/spack/setup-env.sh && spack install neso.nektar +adr_solver +compflow_solver ~python ^scotch@6.0.4 ^mpich
 
 
